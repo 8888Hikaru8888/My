@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+actor "Client" as fc
+
+rectangle "Carwasher" {
+usecase "Регистрация пользователя" as UC1
+usecase "Выбор автомойки" as UC2
+usecase "Оплата услуги" as UC3
+usecase "Ошибка подтверждения номера" as UCr1
+usecase "Подтверждения номера телефона" as UCr2
+
+usecase "Выбор города" as UCt1
+usecase "Выбор адреса" as UCt2
+usecase "Выбор по поиску" as UCt3
+
+usecase "Оплата" as UCe1
+usecase "Выбор способа оплаты" as UCe2
+
+}
+fc--UC1
+fc--UC2
+fc--UC3
+UC1--UCr1
+UC1--UCr2
+
+UC2--UCt1
+UC2--UCt2
+UC2--UCt3
+
+UC3--UCe1
+UC3--UCe2
+@enduml
