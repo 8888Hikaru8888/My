@@ -30,3 +30,28 @@ UC2--UCt3
 UC3--UCe1
 UC3--UCe2
 @enduml
+@startuml
+skinparam maxmessagesize 150
+autonumber
+autoactivate on
+
+actor User
+participant "Мобильное приложение" as MB
+participant API
+participant DB
+
+User-->MB:клиент запросил мойки
+alt базовый сценарий
+MB-->API: GET Запрос к ручке /api/city/wash
+API-->MB:Поиск по мойке
+API<--DB:обращение к базе данных
+API-->DB:Выборка
+note right DB
+нет моек то список washer
+end note
+API->API:формирование пакета
+MB<--API:Отчет
+else ошибка сервера
+User<--MB: отображение формы
+end
+@enduml
