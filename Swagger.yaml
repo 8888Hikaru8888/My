@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Car API
+  version: 1.0.0
+paths:
+  /cars:
+    get:
+      summary: Get all cars
+      responses:
+        '200':
+          description: List of cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+    post:
+      summary: Create a new car
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Car created successfully
+  /cars/{id}:
+    get:
+      summary: Get car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          example: "1b7587ad-e851-4902-88eb-b5ace0d7fb41"
+      responses:
+        '200':
+          description: Car details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found
+    put:
+      summary: Update car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Car updated successfully
+    delete:
+      summary: Delete car by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Car deleted successfully
+
+components:
+  schemas:
+    Car:
+      type: object
+      required:
+        - vin
+        - make
+        - model
+        - year
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          example: "1b7587ad-e851-4902-88eb-b5ace0d7fb41"
+        vin:
+          type: string
+          description: Vehicle Identification Number
+          example: "M1MAECHY1LT025155"
+        make:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Vitz"
+        year:
+          type: string
+          pattern: '^\d{4}$'
+          example: "2011"
+        gosNumber:
+          type: string
+          description: Government license plate number
+          example: "X007XX65"
+        bodyType:
+          type: string
+          enum:
+            - Sedan
+            - Hatchback
+            - SUV
+            - Coupe
+            - Convertible
+          example: "Sedan"
+        usenId:
+          type: string
+          format: uuid
+          example: "3ef7f446-0db1-4386-b5da-b054d7fc377f"
+      example:
+        id: "1b7587ad-e851-4902-88eb-b5ace0d7fb41"
+        vin: "M1MAECHY1LT025155"
+        make: "Toyota"
+        model: "Vitz"
+        year: "2011"
+        gosNumber: "X007XX65"
+        bodyType: "Sedan"
+        usenId: "3ef7f446-0db1-4386-b5da-b054d7fc377f"
