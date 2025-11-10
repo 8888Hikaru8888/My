@@ -1,0 +1,146 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table clients {
+  id integer [primary key]
+  username varchar
+  phone varchar
+  status varchar [note: 'regular, vip, blacklisted']
+  created_at timestamp
+}
+
+Table cars {
+  id integer [primary key]
+  client_id integer [not null]
+  title varchar
+  car_type varchar [note: 'sedan, SUV, etc.']
+  license_plate varchar
+  created_at timestamp
+}
+
+Table car_washes {
+  id integer [primary key]
+  city_id integer [not null]
+  name varchar
+  address varchar
+  working_hours varchar
+  created_at timestamp
+}
+
+Table cities {
+  id integer [primary key]
+  name varchar
+  created_at timestamp
+}
+
+Table regions {
+  id integer [primary key]
+  name varchar
+  created_at timestamp
+}
+
+Table car_wash_bays {
+  id integer [primary key]
+  car_wash_id integer [not null]
+  name varchar
+  status varchar [note: 'active, maintenance']
+  created_at timestamp
+}
+
+Table workers {
+  id integer [primary key]
+  car_wash_id integer [not null]
+  username varchar
+  phone varchar
+  rating decimal
+  status varchar [note: 'active, inactive']
+  created_at timestamp
+}
+
+Table services {
+  id integer [primary key]
+  car_wash_id integer [not null]
+  name varchar
+  price decimal
+  duration integer [note: 'in minutes']
+  car_type varchar [note: 'for which car types available']
+  created_at timestamp
+}
+
+Table orders {
+  id integer [primary key]
+  car_wash_bay_id integer [not null]
+  slot_id integer [not null]
+  worker_id integer [not null]
+  service_id integer [not null]
+  client_id integer [not null]
+  car_id integer [not null]
+  status varchar [note: 'new, confirmed, in_progress, completed, cancelled']
+  total_price decimal
+  payment_status varchar [note: 'pending, paid, refunded']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table slots {
+  id integer [primary key]
+  car_wash_bay_id integer [not null]
+  date date
+  start_time time
+  end_time time
+  is_available boolean [default: true]
+  created_at timestamp
+}
+
+Table payments {
+  id integer [primary key]
+  order_id integer [not null]
+  amount decimal
+  payment_method varchar [note: 'cash, card, online']
+  status varchar
+  transaction_id varchar
+  created_at timestamp
+}
+
+Table reviews {
+  id integer [primary key]
+  order_id integer [not null]
+  worker_id integer [not null]
+  rating integer
+  comment text
+  photos_urls text [note: 'JSON array of photo URLs']
+  created_at timestamp
+}
+
+
+Ref: clients.id < cars.client_id
+
+Ref: cities.id < car_washes.city_id
+Ref: car_washes.id < car_wash_bays.car_wash_id
+Ref: car_washes.id < workers.car_wash_id
+Ref: car_washes.id < services.car_wash_id
+
+Ref: car_wash_bays.id < orders.car_wash_bay_id
+Ref: car_wash_bays.id < slots.car_wash_bay_id
+
+Ref: slots.id < orders.slot_id
+Ref: workers.id < orders.worker_id
+Ref: services.id < orders.service_id
+Ref: clients.id < orders.client_id
+Ref: cars.id < orders.car_id
+
+Ref: orders.id < payments.order_id
+Ref: orders.id < reviews.order_id
+Ref: workers.id < reviews.worker_id
+
+
+Table client_special_lists {
+  id integer [primary key]
+  client_id integer [not null]
+  list_type varchar [note: 'vip, blacklist']
+  car_wash_id integer [not null]
+  created_at timestamp
+}
+
+Ref: clients.id < client_special_lists.client_id
+Ref: car_washes.id < client_special_lists.car_wash_id
