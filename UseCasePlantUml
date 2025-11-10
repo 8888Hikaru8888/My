@@ -1,57 +1,62 @@
 @startuml
 left to right direction
-actor "Client" as fc
 
-rectangle "Carwasher" {
-usecase "Регистрация пользователя" as UC1
-usecase "Выбор автомойки" as UC2
-usecase "Оплата услуги" as UC3
-usecase "Ошибка подтверждения номера" as UCr1
-usecase "Подтверждения номера телефона" as UCr2
+actor Клиент
+actor Директор
 
-usecase "Выбор города" as UCt1
-usecase "Выбор адреса" as UCt2
-usecase "Выбор по поиску" as UCt3
 
-usecase "Оплата" as UCe1
-usecase "Выбор способа оплаты" as UCe2
 
+rectangle "CarWasher System" {
+  usecase "US_AD1: Регистрация пользователя" as UC1
+  usecase "Подтверждение номера телефона" as UC2
+  usecase "US_S01: Выбор автомойки" as UC3
+  usecase "Выбор города" as UC4
+  usecase "Выбор адреса" as UC5
+  usecase "Выбор по поиску" as UC6
+  usecase "US_P01: Оплата услуги" as UC7
+  usecase "Оплата" as UC8
+  usecase "Выбор способа оплаты" as UC9
+  
+  usecase "Предоставление статистики\nо работе мойщиков" as UC10
+  usecase "Отображение графиков\n(mini-bi)" as UC11
+  usecase "Выгрузка CSV" as UC12
+  usecase "Ошибка подтверждения" as UC13
 }
-fc--UC1
-fc--UC2
-fc--UC3
-UC1--UCr1
-UC1--UCr2
+usecase "CMC шлюз" as SMS
+usecase "Платёжная система" as Payment
+usecase "1С система" as System1C
 
-UC2--UCt1
-UC2--UCt2
-UC2--UCt3
 
-UC3--UCe1
-UC3--UCe2
-@enduml
-@startuml
-skinparam maxmessagesize 150
-autonumber
-autoactivate on
+Клиент --> UC1
+Клиент --> UC3
+Клиент --> UC7
 
-actor User
-participant "Мобильное приложение" as MB
-participant API
-participant DB
+Директор --> UC10
+UC10 --> UC11
+UC10 --> UC12
 
-User-->MB:клиент запросил мойки
-alt базовый сценарий
-MB-->API: GET Запрос к ручке /api/city/wash
-API-->MB:Поиск по мойке
-API<--DB:обращение к базе данных
-API-->DB:Выборка
-note right DB
-нет моек то список washer
+
+UC2 --> SMS
+UC8 --> Payment
+UC8 --> System1C
+
+UC1 --> UC2  : <<include>>
+UC3 --> UC4 
+UC3 --> UC5 
+UC3 --> UC6 
+UC7 --> UC8 
+UC7 --> UC9 
+
+
+UC1 --> UC13 : <<extend>>
+
+note right of UC1
+  Регистрация через
+  номер телефона
 end note
-API->API:формирование пакета
-MB<--API:Отчет
-else ошибка сервера
-User<--MB: отображение формы
-end
+
+note right of UC7
+  Интеграция с платежными
+  системами и 1С
+end note
 @enduml
