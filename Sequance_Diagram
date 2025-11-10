@@ -1,0 +1,79 @@
+@startuml
+title Car Wash Booking Sequence Diagram
+
+actor Клиент
+actor Кассир
+actor Мойщик
+participant "Client App" as App
+participant "API Gateway" as API
+participant "Auth Service" as Auth
+participant "Booking Service" as Booking
+participant "Payment Service" as Payment
+participant "Notification Service" as Notify
+participant "1C System" as System1C
+
+== Регистрация и аутентификация ==
+Клиент -> App: Ввод номера телефона
+App -> API: POST /auth/phone
+API -> Auth: Запрос верификации
+Auth -> Notify: Отправить SMS код
+Notify --> Клиент: SMS с кодом
+Клиент -> App: Ввод кода
+App -> API: POST /auth/verify
+API -> Auth: Проверка кода
+Auth --> API: JWT токен
+API --> App: Успешная авторизация
+
+== Бронирование услуги ==
+Клиент -> App: Выбор мойки
+App -> API: GET /car-washes?city=...
+API --> App: Список моек
+Клиент -> App: Выбор услуги
+App -> API: GET /car-washes/{id}/services
+API --> App: Список услуг
+Клиент -> App: Выбор даты/времени
+App -> API: GET /car-washes/{id}/slots?date=...
+API -> Booking: Проверка доступности
+Booking --> API: Доступные слоты
+API --> App: Список слотов
+Клиент -> App: Подтверждение брони
+App -> API: POST /orders
+API -> Booking: Создание заказа
+Booking --> API: Order created
+API --> App: Бронь подтверждена
+
+== Оплата ==
+Клиент -> App: Выбор способа оплаты
+App -> API: POST /orders/{id}/payments
+API -> Payment: Инициация платежа
+Payment --> API: Payment pending
+API --> App: Перенаправление на платежный шлюз
+Клиент -> Payment: Ввод платежных данных
+Payment --> API: Payment confirmed
+API -> Booking: Обновить статус заказа
+API -> System1C: Синхронизация с 1С
+API -> Notify: Уведомление об оплате
+Notify --> Клиент: SMS/Email уведомление
+Notify --> Мойщик: Уведомление о новом заказе
+
+== Процесс мойки ==
+Клиент -> Кассир: Прибытие на мойку
+Кассир -> API: GET /orders/{id}
+API --> Кассир: Инфо о заказе
+Кассир -> API: PUT /orders/{id} status=confirmed
+Мойщик -> API: GET /workers/{id}/tasks
+API --> Мойщик: Список задач
+Мойщик -> API: PUT task status=started
+API -> Notify: Уведомление о начале мойки
+Notify --> Клиент: Мойка началась
+Мойщик -> API: PUT task status=completed
+API -> Notify: Уведомление о завершении
+Notify --> Клиент: Мойка завершена
+
+== Обратная связь ==
+Клиент -> App: Оставить отзыв
+App -> API: POST /orders/{id}/reviews
+API --> App: Отзыв сохранен
+API -> Booking: Обновить рейтинг мойщика
+
+@enduml
