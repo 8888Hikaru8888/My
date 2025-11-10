@@ -1,11 +1,79 @@
 openapi: 3.0.0
 info:
-  title: Car API
+  title: CarWash API
+  description: Comprehensive API for car wash management system
   version: 1.0.0
+  contact:
+    name: API Support
+    email: support@carwash.com
+
+servers:
+  - url: https://api.carwash.com/v1
+    description: Production server
+  - url: https://staging-api.carwash.com/v1
+    description: Staging server
+
 paths:
+  # Authentication endpoints
+  /auth/phone:
+    post:
+      summary: Request phone verification
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  example: "+79991234567"
+      responses:
+        '200':
+          description: Verification code sent
+        '400':
+          description: Invalid phone number
+
+  /auth/verify:
+    post:
+      summary: Verify phone code
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                code:
+                  type: string
+      responses:
+        '200':
+          description: Verification successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+
+  # Cars endpoints (existing)
   /cars:
     get:
       summary: Get all cars
+      tags: [Cars]
+      parameters:
+        - in: query
+          name: client_id
+          schema:
+            type: string
+          description: Filter by client ID
       responses:
         '200':
           description: List of cars
@@ -17,6 +85,7 @@ paths:
                   $ref: '#/components/schemas/Car'
     post:
       summary: Create a new car
+      tags: [Cars]
       requestBody:
         required: true
         content:
@@ -26,9 +95,11 @@ paths:
       responses:
         '201':
           description: Car created successfully
+
   /cars/{id}:
     get:
       summary: Get car by ID
+      tags: [Cars]
       parameters:
         - in: path
           name: id
@@ -47,6 +118,7 @@ paths:
           description: Car not found
     put:
       summary: Update car by ID
+      tags: [Cars]
       parameters:
         - in: path
           name: id
@@ -64,6 +136,7 @@ paths:
           description: Car updated successfully
     delete:
       summary: Delete car by ID
+      tags: [Cars]
       parameters:
         - in: path
           name: id
@@ -74,8 +147,415 @@ paths:
         '204':
           description: Car deleted successfully
 
+  # Car washes endpoints
+  /car-washes:
+    get:
+      summary: Get all car washes
+      tags: [Car Washes]
+      parameters:
+        - in: query
+          name: city
+          schema:
+            type: string
+          description: Filter by city
+        - in: query
+          name: available
+          schema:
+            type: boolean
+          description: Filter by availability
+      responses:
+        '200':
+          description: List of car washes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarWash'
+
+  /car-washes/{id}:
+    get:
+      summary: Get car wash by ID
+      tags: [Car Washes]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Car wash details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarWash'
+
+  # Services endpoints
+  /car-washes/{car_wash_id}/services:
+    get:
+      summary: Get services for a car wash
+      tags: [Services]
+      parameters:
+        - in: path
+          name: car_wash_id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: car_type
+          schema:
+            type: string
+          description: Filter by car type
+      responses:
+        '200':
+          description: List of services
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service'
+
+  # Slots endpoints
+  /car-washes/{car_wash_id}/slots:
+    get:
+      summary: Get available time slots
+      tags: [Slots]
+      parameters:
+        - in: path
+          name: car_wash_id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: date
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Date to check availability
+        - in: query
+          name: service_id
+          schema:
+            type: string
+          description: Service ID to check duration
+      responses:
+        '200':
+          description: List of available slots
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slot'
+
+  # Orders endpoints
+  /orders:
+    get:
+      summary: Get user orders
+      tags: [Orders]
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Filter by status
+        - in: query
+          name: client_id
+          schema:
+            type: string
+          description: Filter by client ID
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+    post:
+      summary: Create new order
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderInput'
+      responses:
+        '201':
+          description: Order created successfully
+
+  /orders/{id}:
+    get:
+      summary: Get order by ID
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    put:
+      summary: Update order
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+      responses:
+        '200':
+          description: Order updated successfully
+    delete:
+      summary: Cancel order
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order cancelled successfully
+
+  # Payments endpoints
+  /orders/{order_id}/payments:
+    post:
+      summary: Create payment for order
+      tags: [Payments]
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentInput'
+      responses:
+        '201':
+          description: Payment initiated
+
+  # Workers endpoints
+  /workers/{worker_id}/tasks:
+    get:
+      summary: Get worker tasks for today
+      tags: [Workers]
+      parameters:
+        - in: path
+          name: worker_id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkerTask'
+
+  /workers/{worker_id}/tasks/{task_id}/status:
+    put:
+      summary: Update task status
+      tags: [Workers]
+      parameters:
+        - in: path
+          name: worker_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: task_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [started, completed, cancelled]
+      responses:
+        '200':
+          description: Status updated
+
+  # Reviews endpoints
+  /orders/{order_id}/reviews:
+    post:
+      summary: Create review for order
+      tags: [Reviews]
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                comment:
+                  type: string
+                photos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Review created
+
+  # Analytics endpoints
+  /analytics/overview:
+    get:
+      summary: Get business overview analytics
+      tags: [Analytics]
+      parameters:
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: car_wash_id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analytics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsOverview'
+
+  /analytics/forecast:
+    get:
+      summary: Get forecast based on weather and history
+      tags: [Analytics]
+      parameters:
+        - in: query
+          name: days
+          schema:
+            type: integer
+            default: 7
+      responses:
+        '200':
+          description: Forecast data
+
+  # Client management endpoints
+  /clients/{client_id}/status:
+    put:
+      summary: Update client status (VIP/Blacklist)
+      tags: [Clients]
+      parameters:
+        - in: path
+          name: client_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [regular, vip, blacklisted]
+      responses:
+        '200':
+          description: Status updated
+
+  # Cashier endpoints
+  /cashier/orders:
+    post:
+      summary: Create order via cashier
+      tags: [Cashier]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CashierOrderInput'
+      responses:
+        '201':
+          description: Order created
+
+  /cashier/orders/{order_id}/payment:
+    post:
+      summary: Process payment via cashier
+      tags: [Cashier]
+      parameters:
+        - in: path
+          name: order_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_method:
+                  type: string
+                  enum: [cash, card]
+                amount:
+                  type: number
+      responses:
+        '200':
+          description: Payment processed
+
 components:
   schemas:
+    # Existing Car schema
     Car:
       type: object
       required:
@@ -116,7 +596,7 @@ components:
             - Coupe
             - Convertible
           example: "Sedan"
-        usenId:
+        userId:
           type: string
           format: uuid
           example: "3ef7f446-0db1-4386-b5da-b054d7fc377f"
@@ -128,5 +608,244 @@ components:
         year: "2011"
         gosNumber: "X007XX65"
         bodyType: "Sedan"
+        userId: "3ef7f446-0db1-4386-b5da-b054d7fc377f"
 
-        usenId: "3ef7f446-0db1-4386-b5da-b054d7fc377f"
+    # New schemas
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phone:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [regular, vip, blacklisted]
+        createdAt:
+          type: string
+          format: date-time
+
+    CarWash:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        workingHours:
+          type: string
+        availableBays:
+          type: integer
+        status:
+          type: string
+          enum: [active, maintenance, closed]
+
+    Service:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        duration:
+          type: integer
+        carTypes:
+          type: array
+          items:
+            type: string
+
+    Slot:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        available:
+          type: boolean
+        bayId:
+          type: string
+          format: uuid
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        clientId:
+          type: string
+          format: uuid
+        carId:
+          type: string
+          format: uuid
+        carWashId:
+          type: string
+          format: uuid
+        serviceId:
+          type: string
+          format: uuid
+        slotId:
+          type: string
+          format: uuid
+        workerId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, confirmed, in_progress, completed, cancelled, complained]
+        totalPrice:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    OrderInput:
+      type: object
+      required:
+        - carWashId
+        - serviceId
+        - slotId
+        - carId
+      properties:
+        carWashId:
+          type: string
+          format: uuid
+        serviceId:
+          type: string
+          format: uuid
+        slotId:
+          type: string
+          format: uuid
+        carId:
+          type: string
+          format: uuid
+        notes:
+          type: string
+
+    OrderUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [cancelled]
+        slotId:
+          type: string
+          format: uuid
+
+    PaymentInput:
+      type: object
+      properties:
+        paymentMethod:
+          type: string
+          enum: [card, apple_pay, google_pay]
+
+    WorkerTask:
+      type: object
+      properties:
+        orderId:
+          type: string
+          format: uuid
+        clientName:
+          type: string
+        carInfo:
+          type: string
+        service:
+          type: string
+        scheduledTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+
+    AnalyticsOverview:
+      type: object
+      properties:
+        totalOrders:
+          type: integer
+        totalRevenue:
+          type: number
+        averageRating:
+          type: number
+        popularServices:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceName:
+                type: string
+              count:
+                type: integer
+        workerPerformance:
+          type: array
+          items:
+            type: object
+            properties:
+              workerName:
+                type: string
+              completedOrders:
+                type: integer
+              averageRating:
+                type: number
+
+    CashierOrderInput:
+      type: object
+      required:
+        - carWashId
+        - serviceId
+        - slotId
+        - clientPhone
+        - carInfo
+      properties:
+        carWashId:
+          type: string
+          format: uuid
+        serviceId:
+          type: string
+          format: uuid
+        slotId:
+          type: string
+          format: uuid
+        clientPhone:
+          type: string
+        clientName:
+          type: string
+        carInfo:
+          type: object
+          properties:
+            make:
+              type: string
+            model:
+              type: string
+            licensePlate:
+              type: string
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []
