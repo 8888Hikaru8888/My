@@ -1,0 +1,135 @@
+@startuml
+left to right direction
+
+' Акторы системы
+actor Клиент
+actor Мойщик
+actor Кассир
+actor Директор
+
+rectangle "CarWasher System" {
+  ' Модуль аутентификации и регистрации
+  usecase "UC-001: Регистрация пользователя" as UC1
+  usecase "UC-002: Авторизация по номеру телефона" as UC2
+  usecase "Подтверждение номера телефона" as UC3
+  usecase "Ошибка подтверждения" as UC4
+  
+  ' Модуль бронирования услуг
+  usecase "UC-003: Выбор автомойки" as UC5
+  usecase "UC-004: Бронирование времени" as UC6
+  usecase "Выбор города" as UC7
+  usecase "Выбор адреса" as UC8
+  usecase "Выбор по поиску" as UC9
+  usecase "Просмотр доступных слотов" as UC10
+  usecase "Подтверждение бронирования" as UC11
+  
+  ' Модуль оплаты
+  usecase "UC-005: Оплата услуги онлайн" as UC12
+  usecase "UC-006: Приём оплаты через кассира" as UC13
+  usecase "Выбор способа оплаты" as UC14
+  usecase "Обработка платежа" as UC15
+  
+  ' Модуль работы мойщика
+  usecase "UC-007: Просмотр задач на день" as UC16
+  usecase "UC-008: Отметка о выполнении работы" as UC17
+  usecase "Отметка начала работы" as UC18
+  usecase "Отметка завершения работы" as UC19
+  
+  ' Модуль аналитики
+  usecase "UC-009: Просмотр статистики" as UC20
+  usecase "UC-010: Прогнозирование нагрузки" as UC21
+  usecase "Отображение графиков\n(mini-bi)" as UC22
+  usecase "Выгрузка CSV" as UC23
+  
+  ' Модуль управления клиентами
+  usecase "UC-011: Управление VIP/чёрным списком" as UC24
+  usecase "UC-012: Обработка жалоб" as UC25
+  usecase "Просмотр истории клиента" as UC26
+  usecase "Обработка возвратов" as UC27
+}
+
+' Внешние системы
+usecase "CMC шлюз" as SMS
+usecase "Платёжная система" as Payment
+usecase "1С система" as System1C
+usecase "Система уведомлений" as Notifications
+
+' Связи акторов с use cases
+Клиент --> UC1
+Клиент --> UC2
+Клиент --> UC5
+Клиент --> UC6
+Клиент --> UC12
+Клиент --> UC25
+
+Мойщик --> UC2
+Мойщик --> UC16
+Мойщик --> UC17
+
+Кассир --> UC2
+Кассир --> UC13
+
+Директор --> UC2
+Директор --> UC20
+Директор --> UC21
+Директор --> UC24
+Директор --> UC25
+
+' Включения и расширения
+UC1 --> UC3 
+UC2 --> UC3 
+UC1 --> UC4 
+UC2 --> UC4 
+
+UC5 --> UC7 
+UC5 --> UC8 
+UC5 --> UC9 
+
+UC6 --> UC10 
+UC6 --> UC11 
+
+UC12 --> UC14 
+UC12 --> UC15 
+
+UC13 --> UC15 
+
+UC17 --> UC18 
+UC17 --> UC19 
+
+UC20 --> UC22 
+UC20 --> UC23 
+
+UC24 --> UC26 
+
+UC25 --> UC27 
+
+' Внешние интеграции
+UC3 --> SMS
+UC15 --> Payment
+UC15 --> System1C
+UC11 --> Notifications
+UC19 --> Notifications
+UC25 --> Notifications
+
+' Примечания
+note bottom of UC1
+  Регистрация через
+  номер телефона
+end note
+
+note left of UC12
+  Интеграция с платежными
+  системами и 1С
+end note
+
+note right of UC20
+  Аналитика в реальном
+  времени с прогнозированием
+end note
+
+note right of UC25
+  Многоуровневая система
+  обработки обратной связи
+end note
+
+@enduml
