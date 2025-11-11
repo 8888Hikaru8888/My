@@ -35,6 +35,7 @@ Table cities {
 
 Table regions {
   id integer [primary key]
+  city_id integer [not null]
   name varchar
   created_at timestamp
 }
@@ -46,7 +47,13 @@ Table car_wash_bays {
   status varchar [note: 'active, maintenance']
   created_at timestamp
 }
-
+Table Client_x_Auto {
+  id integer [primary key]
+  client_id integer [not null]
+  car_id integer [not null]
+  
+  created_at timestamp
+}
 Table workers {
   id integer [primary key]
   car_wash_id integer [not null]
@@ -144,3 +151,9 @@ Table client_special_lists {
 
 Ref: clients.id < client_special_lists.client_id
 Ref: car_washes.id < client_special_lists.car_wash_id
+
+Ref: "regions"."city_id" < "cities"."id"
+
+Ref: "clients"."id" - "Client_x_Auto"."client_id"
+
+Ref: "cars"."id" - "Client_x_Auto"."car_id"
