@@ -63,7 +63,17 @@
 ```
 
 ## Ссылки:
--[OpenAPI](./OpenAPI/api-docs.yaml)-OpenAPI спецификация
+-[**OpenAPI**](./OpenAPI/api-docs.yaml)-OpenAPI спецификация
+-[**Sequance_Diagram**](./SequanceDiagram/Sequance_Diagram)
+-[**ERD**](./ERDCat/ERD)-ERD спецификация
+-[**StatusModel**](./StatusModel/Status_Model.uml)
+-[**StoryMapping**](./StoryMapping/User Story Mapping1.png)
+-[**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)
+-[**Use_Case**](./UseCase/UseCasePlantUml)
+-[**UserStories_Director**](./UserStory/UserStories_Director.md)
+-[**С4Model CarWash**](./С4Model CarWash.png)
+-[**Directors demands**](./Directors`s demands.md)
+
 
 
 
