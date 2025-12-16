@@ -67,12 +67,13 @@
 -[**Sequance_Diagram**](./SequanceDiagram/Sequance_Diagram)  
 -[**ERD**](./ERDCat/ERD)-ERD спецификация  
 -[**StatusModel**](./StatusModel/Status_Model.uml)  
-[StoryMapping](https://github.com/8888Hikaru8888/My/blob/main/StoryMapping/User%20Story%20Mapping1.png)  
+[[StoryMapping](https://github.com/8888Hikaru8888/My/blob/main/StoryMapping/User%20Story%20Mapping1.png)]  
 -[**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)  
 -[**Use_Case**](./UseCase/UseCasePlantUml)  
 -[**UserStories_Director**](./UserStory/UserStories_Director.md)   
 -[**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png)  
 -[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
