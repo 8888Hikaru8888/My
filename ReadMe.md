@@ -63,22 +63,29 @@
 ```
 
 ## Ссылки:
+### OpenAPI
 -[**OpenAPI**](./OpenAPI/api-docs.yaml)-OpenAPI спецификация  
+### Sequance_Diagram
 -[**Sequance_Diagram**](./SequanceDiagram/Sequance_Diagram)  
 ![**Sequance_Diagram**](https://github.com/8888Hikaru8888/My/blob/main/SequanceDiagram/Sequance_Diagram.png)
+### ERD
 -[**ERD**](./ERDCat/ERD)-ERD спецификация  
 ![**ERD**](https://github.com/8888Hikaru8888/My/blob/main/ERDCat/ERD2.png)
+### StatusModel
 -[**StatusModel**](./StatusModel/Status_Model.uml)  
 ![**StatusModel**](https://github.com/8888Hikaru8888/My/blob/main/StatusModel/Status_Model.png)  
--**StoryMapping** 
+### StoryMapping
 ![**StoryMapping**](https://github.com/8888Hikaru8888/My/blob/main/StoryMapping/User%20Story%20Mapping1.png)
+### Use_Case
 -[**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)  
 -[**Use_Case**](./UseCase/UseCasePlantUml)  
 ![**Use_Case**](https://github.com/8888Hikaru8888/My/blob/main/UseCase/UseCaseR.png) 
+### UserStories_Director
 -[**UserStories_Director**](./UserStory/UserStories_Director.md)   
--[**С4Model CarWash**]  
+### UС4Model CarWash
 ![**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png)  
 -[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
