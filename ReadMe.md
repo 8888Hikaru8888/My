@@ -69,7 +69,7 @@
 -[**ERD**](./ERDCat/ERD)-ERD спецификация  
 ![**ERD**](https://github.com/8888Hikaru8888/My/blob/main/ERDCat/ERD2.png)
 -[**StatusModel**](./StatusModel/Status_Model.uml)  
-![**StatusModel**]([./StatusModel/Status_Model.uml](https://github.com/8888Hikaru8888/My/blob/main/StatusModel/Status_Model.png))  
+![**StatusModel**](https://github.com/8888Hikaru8888/My/blob/main/StatusModel/Status_Model.png)  
 -**StoryMapping** 
 ![**StoryMapping**](https://github.com/8888Hikaru8888/My/blob/main/StoryMapping/User%20Story%20Mapping1.png)
 -[**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)  
@@ -79,6 +79,7 @@
 -[**С4Model CarWash**]  
 ![**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png)  
 -[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
