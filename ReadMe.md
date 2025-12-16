@@ -71,8 +71,9 @@
 -[**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)  
 -[**Use_Case**](./UseCase/UseCasePlantUml)  
 -[**UserStories_Director**](./UserStory/UserStories_Director.md)  
--[**С4Model CarWash**](./С4Model CarWash.png)  
--[**Directors demands**](./Directors`s demands.md)
+-[**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png)  
+-[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
