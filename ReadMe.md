@@ -87,6 +87,10 @@
 -[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
 
 
+| **VIII** | **OpenAPI спецификация** | [`Open API`](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/8888Hikaru8888/My/blob/main/OpenAPI/api-docs.yaml) |
+
+
+
 
 
 
