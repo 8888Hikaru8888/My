@@ -4,6 +4,7 @@
   _Мобильное (Андроид, Айфон) приложение для клиентов сети автомоек. + WEB для директора, бухгалтера, кассира, мойщика._
   
 ## Требования
+-[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
 + Пользователи:
    1. Директор
    2. Бухгалтер
@@ -66,16 +67,16 @@
 
 | Артефакт | Файлы | Отображение |  
 |----------|-------|-------------|  
-| **OpenAPI спецификация** | [**OpenAPI**](./OpenAPI/api-docs.yaml) | [`Open API`](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/8888Hikaru8888/My/refs/heads/main/OpenAPI/api-docs.yaml) |  
+| **OpenAPI спецификация** | [**api-docs.yaml**](./OpenAPI/api-docs.yaml) | [`Open API`](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/8888Hikaru8888/My/refs/heads/main/OpenAPI/api-docs.yaml) |  
 | **Sequance_Diagram** | [**Sequance_Diagram**](./SequanceDiagram/Sequance_Diagram) | ![**Sequance_Diagram**](https://github.com/8888Hikaru8888/My/blob/main/SequanceDiagram/Sequance_Diagram.png) |  
-| **ERD** | [**ERD**](./ERDCat/ERD)-ERD спецификация | ![**ERD**](https://github.com/8888Hikaru8888/My/blob/main/ERDCat/ERD2.png) |  
-| **StatusModel** | [**StatusModel**](./StatusModel/Status_Model.uml) | ![**StatusModel**](https://github.com/8888Hikaru8888/My/blob/main/StatusModel/Status_Model.png) |  
+| **ERD** | [**ERD**](./ERDCat/ERD) | ![**ERD**](https://github.com/8888Hikaru8888/My/blob/main/ERDCat/ERD2.png) |  
+| **StatusModel** | [**Status_Model.uml**](./StatusModel/Status_Model.uml) | ![**StatusModel**](https://github.com/8888Hikaru8888/My/blob/main/StatusModel/Status_Model.png) |  
 | **StoryMapping** | | ![**StoryMapping**](https://github.com/8888Hikaru8888/My/blob/main/StoryMapping/User%20Story%20Mapping1.png) |  
-| **Use_Case** | [**Use_Case(ТЗ)**](./UseCase/Use_Case(ТЗ).md)  <br> [**Use_Case**](./UseCase/UseCasePlantUml) | ![**Use_Case**](https://github.com/8888Hikaru8888/My/blob/main/UseCase/UseCaseR.png) |  
+| **Use_Case** | [**Use_Case(ТЗ).md**](./UseCase/Use_Case(ТЗ).md)  <br> [**Use_Case**](./UseCase/UseCasePlantUml) | ![**Use_Case**](https://github.com/8888Hikaru8888/My/blob/main/UseCase/UseCaseR.png) |  
 | **UserStories_Director** | [**UserStories_Director**](./UserStory/UserStories_Director.md) | |  
 | **С4Model** | | ![**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png) |  
 
--[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
