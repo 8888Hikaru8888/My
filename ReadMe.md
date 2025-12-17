@@ -66,8 +66,7 @@
 
 | Артефакт | Файлы | Отображение |  
 |----------|-------|-------------|  
-
-| **OpenAPI спецификация** | [**OpenAPI**](./OpenAPI/api-docs.yaml)| [`Open API`](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/8888Hikaru8888/My/refs/heads/main/OpenAPI/api-docs.yaml) |  
+| **OpenAPI спецификация** | [**OpenAPI**](./OpenAPI/api-docs.yaml) | [`Open API`](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/8888Hikaru8888/My/refs/heads/main/OpenAPI/api-docs.yaml) |  
 | **Sequance_Diagram** | [**Sequance_Diagram**](./SequanceDiagram/Sequance_Diagram) | ![**Sequance_Diagram**](https://github.com/8888Hikaru8888/My/blob/main/SequanceDiagram/Sequance_Diagram.png) |  
 ### OpenAPI
 -[**OpenAPI**](./OpenAPI/api-docs.yaml)-OpenAPI спецификация  
@@ -92,6 +91,7 @@
 ### UС4Model CarWash
 ![**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png)  
 -[**Directors`s demands**](https://github.com/8888Hikaru8888/My/blob/main/Directors%60s%20demands.md)  
+
 
 
 
