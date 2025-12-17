@@ -1,8 +1,10 @@
 # MyCarWashing
 
 ## Оглавление  
--[ТЗ](#-ТЗ)
--[ Ссылки](#Ссылки)
+-[ТЗ](#ТЗ)  
+-[Требования](#Требования)  
+-[Расчёты](#Расчёты)  
+-[Ссылки](#Ссылки)  
 
 ## ТЗ
   _Мобильное (Андроид, Айфон) приложение для клиентов сети автомоек. + WEB для директора, бухгалтера, кассира, мойщика._
@@ -79,6 +81,7 @@
 | **Use_Case** | [**Use_Case(ТЗ).md**](./UseCase/Use_Case(ТЗ).md)  <br> [**Use_Case**](./UseCase/UseCasePlantUml) | ![**Use_Case**](https://github.com/8888Hikaru8888/My/blob/main/UseCase/UseCaseR.png) |  
 | **UserStories_Director** | [**UserStories_Director**](./UserStory/UserStories_Director.md) | |  
 | **С4Model** | | ![**С4Model CarWash**](https://github.com/8888Hikaru8888/My/blob/main/%D0%A14Model%20CarWash.png) |  
+
 
 
 
